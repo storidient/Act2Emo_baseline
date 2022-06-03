@@ -61,7 +61,7 @@ def main(args):
     for gen in generations:
         gen = gen.tolist()
         text = tokenizer.decode(gen, clean_up_tokenization_spaces=True)
-        text = text[:find_nth(text, args.STOP_TOKEN, 1)] if config.STOP_TOKEN not in input else text[:find_nth(text, args.STOP_TOKEN, 2)]
+        text = text[:find_nth(text, args.STOP_TOKEN, 1)] if args.STOP_TOKEN not in input else text[:find_nth(text, args.STOP_TOKEN, 2)]
         text_generations.append(text)
 
     result.append({
