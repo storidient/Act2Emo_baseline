@@ -21,12 +21,6 @@ def find_nth(haystack, needle, n):
     return start if start != -1 else None
 
 
-"""save the excel file"""
-def save_xslx(list_dict, dir):
-  df = pd.DataFrame(list_dict)
-  df.to_excel(dir)
-    
-    
 def main():
   wandb.init(project="Act2Emo_keywords")
   config = wandb.config
@@ -108,8 +102,7 @@ def main():
                                   config.NUM_BEAMS,
                                   config.SUMMARY_LEN)
   
-  save_xslx(result, output_path / Path(f_name))
-
+  pd.DataFrame(list_dict).to_excel(output_path / Path(f_name))
 
 
 if __name__ == "__main__":
