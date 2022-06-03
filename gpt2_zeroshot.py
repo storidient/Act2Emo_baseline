@@ -9,7 +9,7 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from data import BodyDataset
-
+from utils import save_file
 
 
 """cut the generations"""
@@ -75,13 +75,5 @@ def main(args):
         "generations": text_generations
         })
     
-  output_path = Path(args.OUTPUT_DIR)
-  output_path.mkdir(exist_ok = True)
-
-  f_name = '{}-{}-{}-{}-{}.xlsx'.format(re.sub('/','-', args.GPT2_MODEL), 
-                                        args.TOP_K,
-                                        args.TOP_P,
-                                        args.NUM_BEAMS,
-                                        args.OUTPUT_LEN)
-  
-  pd.DataFrame(list_dict).to_excel(output_path / Path(f_name))
+  f_name = '{}-{}-{}-{}-{}'.format(args.GPT2_MODEL, args.TOP_K, args.TOP_P, args.NUM_BEAMS, args.OUTPUT_LEN)  
+  save_file(result, args.OUTPUT_DIR, f_name, args.OUTPUT_TYPE)
