@@ -1,12 +1,7 @@
 import re
-
 import pandas as pd
-from jamo import h2j, j2hcj
 from cached_property import cached_property
-
-"""a list of vowels"""
-vowel_list = ['ㅏ','ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ','ㅣ','ㅒ', 
-              'ㅐ','ㅔ', 'ㅖ', 'ㅟ', 'ㅚ', 'ㅙ', 'ㅞ']
+from utils import extract_jongsung, decide_jongsung
 
 """a dictionary of josa"""
 josa_dict = dict()
@@ -25,28 +20,11 @@ def make_list(words):
   return [w for w in output if len(w) > 0]             
                       
 class AddPrompts:
-  def __init__(self, word, vowel = vowel_list, josa = josa_dict):
+  def __init__(self, word, josa = josa_dict):
     self.word = word
-    self.vowel, self.liquid = self.decision(vowel)
+    self.vowel, self.liquid = decide_jongsung(self.word)
     self.prompts = self.make_prompts(josa)
     self.input = self.add_prompts()
-
-  @cached_property
-  def jongsung(self):
-    return j2hcj(h2j(self.word[-1]))[-1]
-  
-  """decide the type of word"""
-  def decision(self, vowel_list):
-    vowel, liquid = False, False
-    
-    if self.jongsung in vowel_list:
-      vowel = True
-      liquid = True
-
-    if self.jongsung == 'ㄹ':
-      liquid = True
-          
-    return vowel, liquid
   
   """make a list of prompts"""
   def make_prompts(self, josa):
