@@ -29,7 +29,7 @@ def save_xslx(list_dict, dir):
   df.to_excel(dir)
   
 def main():
-  wandb.init(project="Act2Emo_keywords", entity="storidient")
+  wandb.init(project="Act2Emo_keywords")
   config = wandb.config
 
   """Set Config"""
@@ -88,7 +88,7 @@ def main():
     for gen in generations:
         gen = gen.tolist()
         text = tokenizer.decode(gen, clean_up_tokenization_spaces=True)
-        text = text[:find_nth(text, config.STOP_TOKEN, 1)] if config.STOP_TOKEN not in prompt else text[:find_nth(text, config.STOP_TOKEN, 2)]
+        text = text[:find_nth(text, config.STOP_TOKEN, 1)] if config.STOP_TOKEN not in input else text[:find_nth(text, config.STOP_TOKEN, 2)]
         text_generations.append(text)
 
     result.append({
