@@ -103,8 +103,10 @@ def main():
   output_path = Path(config.OUTPUT_DIR)
   output_path.mkdir(exist_ok = True)
 
-  f_name = '{}-{}-{}.xlsx'.format(re.sub('/','-', config.GPT2_MODEL), 
-                                  config.IN_LEN, 
+  f_name = '{}-{}-{}-{}-{}.xlsx'.format(re.sub('/','-', config.GPT2_MODEL), 
+                                  config.TOP_K,
+                                  config.TOP_P,
+                                  config.NUM_BEAMS,
                                   config.SUMMARY_LEN)
   
   save_xslx(result, output_path / Path(f_name))
