@@ -20,6 +20,7 @@ def find_nth(haystack, needle, n):
         n -= 1
     return start if start != -1 else None
 
+
 def main(args):  
   """set seed"""
   torch.manual_seed(args.SEED) # pytorch random seed
