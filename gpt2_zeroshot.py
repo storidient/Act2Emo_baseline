@@ -10,6 +10,8 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from data import BodyDataset
 
+
+
 """cut the generations"""
 def find_nth(haystack, needle, n):
     start = haystack.find(needle)
