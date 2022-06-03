@@ -15,6 +15,7 @@ import logging
 
 from data import BodyDataset
 
+"""cut the generations"""
 def find_nth(haystack, needle, n):
     start = haystack.find(needle)
     while start >= 0 and n > 1:
@@ -22,6 +23,7 @@ def find_nth(haystack, needle, n):
         n -= 1
     return start if start != -1 else None
 
+"""save the excel file"""
 def save_xslx(list_dict, dir):
   df = pd.DataFrame(list_dict)
   df.to_excel(dir)
