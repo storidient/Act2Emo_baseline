@@ -15,6 +15,17 @@ def make_list(words):
   return [w for w in output if len(w) > 0]
 
 
+def open_dir(dir):
+  if dir.endswith('.xlsx'):   
+    return pd.read_excel(dir, header = 0)
+
+  elif dir.endswith('.csv'):
+    return = pd.read_excel(dir, header = 0)
+
+  else:
+    raise Exception('The type of file should be csv or xlsx')
+
+
 class JongSung:
   def __init__(self, word, vowel_list = korean_vowel):
     self.word = word
