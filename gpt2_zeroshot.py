@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import pandas as pd
 from pathlib import Path
-import tqdm, json, re, os, sys, argparse
+import tqdm, json, re
 
 from torch import cuda
 device = 'cuda' if cuda.is_available() else 'cpu'
