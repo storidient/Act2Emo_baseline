@@ -2,17 +2,15 @@ import torch
 import numpy as np
 import pandas as pd
 from pathlib import Path
-
-import tqdm, json, re, os, argparse
+import tqdm, json, re, os, argparse, wandb
 
 from torch import cuda
 device = 'cuda' if cuda.is_available() else 'cpu'
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
-import wandb
-
 from data import BodyDataset
+
+
 
 """cut the generations"""
 def find_nth(haystack, needle, n):
@@ -22,11 +20,13 @@ def find_nth(haystack, needle, n):
         n -= 1
     return start if start != -1 else None
 
+
 """save the excel file"""
 def save_xslx(list_dict, dir):
   df = pd.DataFrame(list_dict)
   df.to_excel(dir)
-  
+    
+    
 def main():
   wandb.init(project="Act2Emo_keywords")
   config = wandb.config
