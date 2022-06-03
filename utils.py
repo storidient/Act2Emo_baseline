@@ -62,5 +62,5 @@ class JongSung:
     if self.jongsung in vowel_list:
       self.vowel, self.liquid = True, True
       
-    elif self.jongsung in vowel_list:
+    elif self.jongsung == 'ㄹ':
       self.liquid = True
