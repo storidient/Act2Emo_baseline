@@ -1,7 +1,7 @@
 import re
 import pandas as pd
 from cached_property import cached_property
-from utils import extract_jongsung, decide_jongsung
+from utils import extract_jongsung, decide_jongsung, make_list
 
 """a dictionary of josa"""
 josa_dict = dict()
@@ -13,11 +13,6 @@ josa_dict['vowel'] = [
                       ('가', '이'),
                       ('는', '은')
                       ]
-                      
-"""a string to a list"""
-def make_list(words):
-  output = [re.sub('[^가-힣]', '', w) for w in words.split(',')]
-  return [w for w in output if len(w) > 0]             
                       
 class AddPrompts:
   def __init__(self, word, josa = josa_dict):
