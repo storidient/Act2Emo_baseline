@@ -65,9 +65,13 @@ class AddPrompts:
 
 class BodyDataset:
   def __init__(self, dir):
-    assert dir.endswith('.xlsx'), 'The file does not end with xlsx'
-    
-    data = pd.read_excel(dir, header = 0)
+    if dir.endswith('.xlsx'):   
+      data = pd.read_excel(dir, header = 0)
+    elif dir.endswith('.csv'):
+      data = pd.read_excel(dir, header = 0)
+    else:
+      raise Exception('The type of file should be csv or xlsx')
+      
 
     self.keywords = data['Keywords']
     self.cat = data['Category']
