@@ -14,6 +14,8 @@ josa_dict['vowel'] = [
                       ('는', '은')
                       ]
 
+
+
 """inherit class Jongsung and add prompts"""
 class AddPrompts(Jongsung):
   def __init__(self, word, josa = josa_dict):
