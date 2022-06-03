@@ -1,3 +1,5 @@
+import re
+
 import pandas as pd
 from jamo import h2j, j2hcj
 from cached_property import cached_property
