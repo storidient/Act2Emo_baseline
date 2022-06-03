@@ -45,35 +45,33 @@ class AddPrompts:
 
 class BodyDataset:
   def __init__(self, dir):
+    
     """open the file"""
     if dir.endswith('.xlsx'):   
       data = pd.read_excel(dir, header = 0)
+    
     elif dir.endswith('.csv'):
       data = pd.read_excel(dir, header = 0)
+    
     else:
       raise Exception('The type of file should be csv or xlsx')
-      
+    
     self.keywords = data['Keywords']
     self.cat = data['Category']
     self.subcat = data['SubCategory']
 
   @cached_property
   def items(self):
-    item_list = list()
-
-    for idx, string in enumerate(self.keywords):
-      for word in make_list(string):
-        item = [(input, 
-                 prompt, 
-                 word, 
-                 self.cat[idx], 
-                 self.subcat[idx]
-                 ) for prompt, input in AddPrompts(word)
-                 ]
-        """add items to the list"""
-        item_list += item
+    item_list = [
+      [
+        [(input, prompt, word, self.cat[idx], self.subcat[idx]) 
+          for prompt, input in AddPrompts(word)] 
+        for word in make_list(string)
+      ] 
+      for idx, string in enumerate(self.keywords)
+    ]
     
-    return item_list
+    return sum(item_list, [[]])
   
   def __len__(self):
     return len(self.items)
