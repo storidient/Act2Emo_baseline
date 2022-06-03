@@ -1,9 +1,9 @@
-import tqdm, json, re, os
-
 import torch
 import numpy as np
 import pandas as pd
 from pathlib import Path
+
+import tqdm, json, re, os
 
 from torch import cuda
 device = 'cuda' if cuda.is_available() else 'cpu'
@@ -11,7 +11,6 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 import wandb
-import logging
 
 from data import BodyDataset
 
