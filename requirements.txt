@@ -1,3 +1,5 @@
 jamo
 git-python
 transformers
+pandas
+wandb
