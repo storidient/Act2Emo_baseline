@@ -57,7 +57,6 @@ class BodyDataset:
       for word in make_list(string):
         item_list += [(input, prompt, word, self.cat[idx], self.subcat[idx]) 
                       for prompt, input in AddPrompts(word)]
-    
     return item_list
          
   def __len__(self):
