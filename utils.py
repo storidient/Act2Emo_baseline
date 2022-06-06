@@ -22,7 +22,7 @@ def open_dir(dir):
     return pd.read_excel(dir, header = 0)
 
   elif dir.endswith('.csv'):
-    return = pd.read_excel(dir, header = 0)
+    return pd.read_excel(dir, header = 0)
 
   else:
     raise Exception('The type of file should be csv or xlsx')
