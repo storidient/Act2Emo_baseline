@@ -48,7 +48,7 @@ def save_file(result, output_dir, file_name, output_type = 'xlsx'):
 
     
     
-class JongSung:
+class Jongsung:
   def __init__(self, word, vowel_list = korean_vowel):
     self.word = word
     self.vowel, self.liquid = False, False
