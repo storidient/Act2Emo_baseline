@@ -29,7 +29,7 @@ def open_dir(dir):
 
     
 """save_the_file"""
-def save_file(result, output_dir, file_name, output_type = xlsx):
+def save_file(result, output_dir, file_name, output_type = 'xlsx'):
   output_dir = Path(output_dir)
   output_dir.mkdir(exist_ok = True)
   
