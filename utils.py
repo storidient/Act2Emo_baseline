@@ -35,11 +35,11 @@ def save_file(result, output_dir, file_name, output_type = xlsx):
   
   file_name = re.sub('/','-',file_name)
   
-  if output_type = 'xlsx':
+  if output_type == 'xlsx':
     file_name += '.xlsx'
     pd.DataFrame(result).to_excel(output_dir / Path(file_name))
   
-  elif output_type = 'csv':
+  elif output_type == 'csv':
     file_name += '.csv'
     pd.DataFrame(result).to_csv(output_dir / Path(file_name))
   
