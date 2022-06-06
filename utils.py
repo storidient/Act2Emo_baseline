@@ -2,6 +2,7 @@ import re
 from jamo import h2j, j2hcj
 from cached_property import cached_property
 from pathlib import Path
+import pandas as pd
 
 
 
