@@ -7,6 +7,8 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--GPT2_MODEL", type=str, default='skt/kogpt2-base-v2',
                     choices=['skt/kogpt2-base-v2', "conceptnet"])
+parser.add_argument("--OUTPUT_TYPE", type=str, defautl = 'xlsx',
+                   choices=['csv', 'xlsx', 'jsonl'])
 
 parser.add_argument("--DATA_PATH", type=str)
 parser.add_argument("--OUTPUT_DIR", type=str, default = './output/')
