@@ -3,3 +3,6 @@ git-python
 transformers
 pandas
 wandb
+beautifulsoup4
+boltons
+requests
