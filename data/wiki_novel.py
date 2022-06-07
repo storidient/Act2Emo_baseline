@@ -5,7 +5,6 @@ from cached_property import cached_property
 from boltons.iterutils import pairwise
 
 
-
 def open_link(url):
     response = requests.get(url)
     html = response.text
