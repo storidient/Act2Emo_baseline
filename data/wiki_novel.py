@@ -39,3 +39,22 @@ class WikiCrawling:
         )
     
     return list(map(clean_html, novel_text))
+
+
+
+def download_wiki(args):
+  """input : url, title_list, output_dir"""
+
+  wiki = WikiCrawling(args.url)
+  Path(args.output_dir).mkdir(exist_ok = True)
+
+  for title in args.title_list:
+    fname = re.sub('/', '-', title + '.txt')
+
+    try:
+      lines = wiki.novel(title)
+    except:
+      lines = list()
+
+    with open(args.output_dir + fname , encoding= "utf-8",mode="w") as f:
+      f.write('\n'.join(lines))
