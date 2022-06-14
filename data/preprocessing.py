@@ -23,7 +23,7 @@ class Download:
 class Cleansing:
   def __init__(self, logger, pattern = None, keys = None):    
     self.logger = logger
-		self.showing = list()
+    self.showing = list()
 
     if pattern == None:
       from revising_pattern import pattern_dict
@@ -70,6 +70,7 @@ class Cleansing:
     cleaned = re.sub(pattern[0], pattern[1], line)
 		
 		if cleaned == line: pass
+		
 		else:
     	message  = 'type : %s \ before : %s \ after : %s \n' % (key, line, cleaned)
 			self.logger.info(message) if key in self.showing else self.logger.debug(messages)
