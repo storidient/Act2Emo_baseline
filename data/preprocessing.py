@@ -72,6 +72,6 @@ class Cleansing:
     if cleaned == line: pass
     else:
       message  = 'type : %s \ before : %s \ after : %s \n' % (key, line, cleaned)
-      self.logger.info(message) if key in self.showing else self.logger.debug(messages)
+      self.logger.info(message) if key in self.showing else self.logger.debug(message)
                             
     return cleaned
