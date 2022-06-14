@@ -70,7 +70,6 @@ class Cleansing:
     cleaned = re.sub(pattern[0], pattern[1], line)
 		
 		if cleaned == line: pass
-		
 		else:
     	message  = 'type : %s \ before : %s \ after : %s \n' % (key, line, cleaned)
 			self.logger.info(message) if key in self.showing else self.logger.debug(messages)
