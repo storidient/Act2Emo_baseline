@@ -1,6 +1,6 @@
 from data.utils import Rx, B
 
-letter = {
+letter_dict = {
     'korean' : '[가-힣]',
     'english': '[A-Za-z]',
     'chinese' : '[一-鿕㐀-䶵豈-龎]',
@@ -8,7 +8,7 @@ letter = {
     'number' : '[0-9]'
     }
 
-bracket = {
+bracket_dict = {
     'small' :  B('\(', '\)'),
     'inequal' : B('<', '>'),
     'inequal-1': B('〈','〉'),
@@ -27,6 +27,6 @@ unify_dict = {
     'ellipsis' : Rx('\.\.\.+|‥+|…', '⋯', 1)
 }
 
-default = {
+default_dict = {
     'wrong_bracket' : Rx('&lt;|&gt;', '', 100)
 }
