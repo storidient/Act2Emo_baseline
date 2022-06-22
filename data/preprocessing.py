@@ -43,7 +43,7 @@ class RxLogging:
   def __init__(self, logger, pattern, keys = None):
     super().__init__(logger)
     self.pattern = pattern
-    self.keys = self.pattern.keys if keys == None self.check(keys, self.pattern)
+    self.keys = self.pattern.keys() if keys == None self.check(keys, self.pattern)
   
   def ordering(self):
     self.keys = sorted(self.keys, key = lambda x : self.pattern[x].level)
