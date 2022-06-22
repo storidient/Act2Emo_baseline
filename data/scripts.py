@@ -30,3 +30,5 @@ unify_dict = {
 default_dict = {
     'wrong_bracket' : Rx('&lt;|&gt;', '', 100)
 }
+
+end_marks = '[\].\?!]'
