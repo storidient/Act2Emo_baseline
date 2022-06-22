@@ -1,4 +1,4 @@
-from data.utils import B
+from data.utils import Rx, B
 
 letter = {
     'korean' : '[가-힣]',
@@ -18,3 +18,7 @@ bracket = {
     'sickle' : B('「', '」'),
     'double_sickle' : B('『','』')
     }
+
+default = {
+    'wrong_bracket' : Rx('&lt;|&gt;', '', 100)
+}
