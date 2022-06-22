@@ -19,6 +19,14 @@ bracket = {
     'double_sickle' : B('『','』')
     }
 
+unify_dict = {
+    'quotation' : Rx('[“”]', '"', 1),
+    'apostrophe' : Rx('[‘’]', "'", 1),
+    'middle' : Rx('[ㆍㆍ]', ',', 1),
+    'hyphen' : Rx('[─ㅡ⎯―\—]', '-', 1),
+    'ellipsis' : Rx('\.\.\.+|‥+|…', '⋯', 1)
+}
+
 default = {
     'wrong_bracket' : Rx('&lt;|&gt;', '', 100)
 }
