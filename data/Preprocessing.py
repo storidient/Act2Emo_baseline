@@ -128,11 +128,11 @@ class RxRevision(RxLogging):
     if re.match('.*["“”].*', text): pass
 
     elif re.match('.*[「」『』].*', text):
-      self.pattern.update({'revise_quotation' : Rx('[「」『』]', '"', 0)})
+      self.pattern.update({'quotation' : Rx('[“”「」『』]', '"', 0)})
       self.logger.info('Quotation_updated : 「」『』')
     
     elif re.match('.*[<>].*', text):
-      self.pattern.update({'revise_quotation' : Rx('[<>]', '"', 0)})
+      self.pattern.update({'quotation' : Rx('[“”<>]', '"', 0)})
       self.logger.info('Quotation_updated : <>')
    
   def apply(self, key, input):
