@@ -106,7 +106,7 @@ class RxImport(RxLogging, RxSetting):
     survive_keys = set(list(self.bracket.keys())) - set(exclude_bracket)
 
     self.pattern.update({'empty_'+ key : Rx(
-        '%s[^%s%s]%s' % (self.bracket[key].open,
+        '%s[^%s%s]*%s' % (self.bracket[key].open,
                          ''.join(self.letter.values()),
                          self.bracket[key].close,
                          self.bracket[key].close), '', 100) for key in survive_keys
