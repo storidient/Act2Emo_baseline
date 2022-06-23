@@ -39,7 +39,7 @@ class RxLogging:
     return list(set(keys)- set(undefined))
 
   
- class RxRevision(RxLogging):
+class RxRevision(RxLogging):
   def __init__(self, logger, pattern, keys = None):
     super().__init__(logger)
     self.pattern = pattern
