@@ -147,8 +147,6 @@ class RxRevision(RxLogging):
   def build(self, text):
     self.update_pattern(text)
     self.ordering()
-
-    self.logger.info('Revising : %s' % ('/'.join(self.keys)))
                  
     for key in self.keys:
       text = list(map(lambda x: self.apply(key, x), text))
