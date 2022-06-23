@@ -38,7 +38,79 @@ class RxLogging:
 
     return list(set(keys)- set(undefined))
 
+
+class RxSetting:
+  def __init__(self):
+    self.pattern = dict()
   
+  def replace(self, key, target, outcome = '', level = 1):
+    self.pattern.update({key : Rx(target, outcome, level)})
+  
+
+class RxImport(RxLogging, RxSetting):
+  def __init__(self, logger, 
+               default : bool = True,
+               letter : dict = None, 
+               bracket : dict = None, 
+               unify : dict = None):
+    
+    RxLogging.__init__(self, logger)
+    RxSetting.__init__(self)
+
+    self.letter, self.bracket, self.unify = letter, bracket, unify
+
+    if default == True:
+      from data.scripts import default_dict
+      self.pattern.update(default_dict)
+
+    if letter == None:
+      from data.scripts import letter_dict
+      self.letter = letter_dict
+    
+    if bracket == None:
+      from data.scripts import bracket_dict
+      self.bracket = bracket_dict
+
+    if unify == None:
+      from data.scripts import unify_dict
+      self.unify = unify_dict
+
+  def update_letter(self, keys):
+    keys = self.check([x.lower() for x in keys], self.letter)
+    self.pattern.update({key : Rx(self.letter[key], '', 1) for key in keys})
+
+  def update_bracket(self, target_keys, outcome_key : str):
+    targets = self.check(target_keys, self.bracket)
+
+    assert outcome_key in self.bracket, 'The outcome key is not defined'
+
+    open = '|'.join([self.bracket[t].open for t in targets])
+    close = '|'.join([self.bracket[t].close for t in targets])
+    self.pattern.update({
+        'bracket_open' : Rx(open, self.bracket[outcome_key].open, 2),
+        'bracket_close' : Rx(close, self.bracket[outcome_key].close, 2)
+        })
+    self.empty_bracket(targets)
+
+  def update_unify(self, keys):
+    if keys == 'all':
+      self.pattern.update(self.unify)
+    
+    else:
+      keys = self.check(keys, self.unify)
+      self.pattern.update({key : self.unify[key] for key in keys})
+
+  def empty_bracket(self, bracket_target):
+    survive_keys = set(list(self.bracket.keys())) - set(bracket_target)
+    
+    self.pattern.update({
+        'empty_'+ key : Rx(
+            '%s[^%s]*%s' % (self.bracket[key].open, 
+                              self.bracket[key].close, 
+                              self.bracket[key].close), '', 0) 
+        for key in survive_keys})
+    
+    
 class RxRevision(RxLogging):
   def __init__(self, logger, pattern, keys = None):
     super().__init__(logger)
