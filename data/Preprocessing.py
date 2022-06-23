@@ -103,31 +103,3 @@ class RxImport(RxLogging, RxSetting):
                          self.bracket[key].close,
                          self.bracket[key].close), '', 100) for key in survive_keys
                          })
-    
-    
-class RxRevision(RxLogging):
-  def __init__(self, logger, pattern, keys = None):
-    super().__init__(logger)
-    self.pattern = pattern
-    self.keys = self.pattern.keys() if keys == None else self.check(keys, self.pattern)
-  
-  def ordering(self):
-    self.keys = sorted(self.keys, key = lambda x : self.pattern[x].level)
-  
-  def apply(self, key, input):
-    pattern = self.pattern[key]
-    output = re.sub(pattern.target, pattern.outcome, input)
-
-    if input != output:
-      self.print(key,'pattern : %s / before %s / after %s' %(key, input, output)
-                 
-    return output
-
-  def build(self, text):
-    self.ordering()
-    self.logger.info('Revising : %s' % ('/'.join(self.keys)))
-                 
-    for key in self.keys:
-      text = list(map(lambda x: self.apply(key, x), text))
-                 
-    return text
