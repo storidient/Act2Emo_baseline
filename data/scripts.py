@@ -1,11 +1,11 @@
 from data.utils import Rx, B
 
 letter_dict = {
-    'korean' : '[가-힣]',
-    'english': '[A-Za-z]',
-    'chinese' : '[一-鿕㐀-䶵豈-龎]',
-    'imperfect': '[ㄱ-ㅎ]',
-    'number' : '[0-9]'
+    'korean' : '가-힣',
+    'english': 'A-Za-z',
+    'chinese' : '一-鿕㐀-䶵豈-龎',
+    'imperfect': 'ㄱ-ㅎ',
+    'number' : '0-9'
     }
 
 bracket_dict = {
