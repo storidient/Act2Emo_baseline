@@ -48,6 +48,9 @@ class RxSetting:
    
   def wrap(self, pattern_list):
     return '|'.join(pattern_list)
+  
+  def kset(self, input_dict):
+    return set(list(input_dict.keys()))
     
     
 class RxPattern(RxLogging, RxSetting):
