@@ -50,7 +50,7 @@ class RxSetting:
     return '|'.join(pattern_list)
     
     
-class RxImport(RxLogging, RxSetting):
+class RxPattern(RxLogging, RxSetting):
   def __init__(self, logger, 
                default : bool = True,
                letter : dict = None, 
