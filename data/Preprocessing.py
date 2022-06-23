@@ -45,8 +45,11 @@ class RxSetting:
 
   def replace(self, key, target, outcome = '', level = 1):
     self.pattern.update({key : Rx(target, outcome, level)})
+   
+  def wrap(self, pattern_list):
+    return '|'.join(pattern_list)
     
-
+    
 class RxImport(RxLogging, RxSetting):
   def __init__(self, logger, 
                default : bool = True,
@@ -85,8 +88,8 @@ class RxImport(RxLogging, RxSetting):
     
     assert outcome_key in self.bracket, 'The outcome key is not defined'
 
-    open = '|'.join([self.bracket[t].open for t in targets])
-    close = '|'.join([self.bracket[t].close for t in targets])
+    open = self.wrap([self.bracket[t].open for t in targets])
+    close = self.wrap([self.bracket[t].close for t in targets])
 
     self.pattern.update({
         'bracket_open' : Rx(open, self.bracket[outcome_key].open, 2),
@@ -109,8 +112,7 @@ class RxImport(RxLogging, RxSetting):
         '%s[^%s%s]*%s' % (self.bracket[key].open,
                          ''.join(self.letter.values()),
                          self.bracket[key].close,
-                         self.bracket[key].close), '', 100) for key in survive_keys
-                         })
+                         self.bracket[key].close), '', 100) for key in survive_keys})
    
 
 class RxRevision(RxLogging):
