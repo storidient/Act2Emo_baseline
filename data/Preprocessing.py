@@ -58,6 +58,7 @@ class RxImport(RxLogging, RxSetting):
     RxSetting.__init__(self)
 
     self.letter, self.bracket, self.unify = letter, bracket, unify
+    self.exclude_bracket = list()
 
     if default == True:
       from data.scripts import default_dict
@@ -77,36 +78,39 @@ class RxImport(RxLogging, RxSetting):
 
   def update_letter(self, keys):
     keys = self.check([x.lower() for x in keys], self.letter)
-    self.pattern.update({key : Rx(self.letter[key], '', 1) for key in keys})
+    self.pattern.update({key : Rx('[%s]' % (self.letter[key]), '', 1) for key in keys})
 
   def update_bracket(self, target_keys, outcome_key : str):
     targets = self.check(target_keys, self.bracket)
-
+    self.exclude_bracket = targets
+    
     assert outcome_key in self.bracket, 'The outcome key is not defined'
 
     open = '|'.join([self.bracket[t].open for t in targets])
     close = '|'.join([self.bracket[t].close for t in targets])
+    
     self.pattern.update({
         'bracket_open' : Rx(open, self.bracket[outcome_key].open, 2),
         'bracket_close' : Rx(close, self.bracket[outcome_key].close, 2)
         })
-    self.empty_bracket(targets)
 
   def update_unify(self, keys):
     if keys == 'all':
       self.pattern.update(self.unify)
-    
+      
     else:
       keys = self.check(keys, self.unify)
       self.pattern.update({key : self.unify[key] for key in keys})
-
-  def empty_bracket(self, bracket_target):
-    survive_keys = set(list(self.bracket.keys())) - set(bracket_target)
+      
+  def empty_bracket(self, allow_letter = None):
+    survive_keys = set(list(self.bracket.keys())) - set(self.exclude_bracket)
+    letters = '[가-힣]' if allow_letter == None else allow_letter
     
     self.pattern.update({
         'empty_'+ key : Rx(
-            '%s[^%s]*%s' % (self.bracket[key].open, 
-                              self.bracket[key].close, 
+            '%s[^%s%s]*%s' % (self.bracket[key].open, 
+                              self.bracket[key].close,
+                              letters,
                               self.bracket[key].close), '', 100) 
         for key in survive_keys})
     
@@ -125,15 +129,14 @@ class RxRevision(RxLogging):
     output = re.sub(pattern.target, pattern.outcome, input)
 
     if input != output:
-      self.print(key,'pattern : %s / before %s / after %s' %(key, input, output))
-      
+      self.print(key,'pattern : %s / before %s / after %s' %(key, input, output)
+                 
     return output
 
   def build(self, text):
     self.ordering()
     self.logger.info('Revising : %s' % ('/'.join(self.keys)))
-    
+                 
     for key in self.keys:
       text = list(map(lambda x: self.apply(key, x), text))
-    
     return text
