@@ -107,7 +107,7 @@ class RxImport(RxLogging, RxSetting):
         'empty_'+ key : Rx(
             '%s[^%s]*%s' % (self.bracket[key].open, 
                               self.bracket[key].close, 
-                              self.bracket[key].close), '', 0) 
+                              self.bracket[key].close), '', 100) 
         for key in survive_keys})
     
     
