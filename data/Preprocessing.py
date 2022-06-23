@@ -45,12 +45,6 @@ class RxSetting:
 
   def replace(self, key, target, outcome = '', level = 1):
     self.pattern.update({key : Rx(target, outcome, level)})
-   
-  def wrap(self, pattern_list):
-    return '|'.join(pattern_list)
-  
-  def kset(self, input_dict):
-    return set(list(input_dict.keys()))
     
     
 class RxPattern(RxLogging, RxSetting):
@@ -64,7 +58,6 @@ class RxPattern(RxLogging, RxSetting):
     RxSetting.__init__(self)
 
     self.letter, self.bracket, self.unify = letter, bracket, unify
-    self.exclude_bracket = list()
 
     if default == True:
       from data.scripts import default_dict
@@ -91,8 +84,8 @@ class RxPattern(RxLogging, RxSetting):
     
     assert outcome_key in self.bracket, 'The outcome key is not defined'
 
-    open = self.wrap([self.bracket[t].open for t in targets])
-    close = self.wrap([self.bracket[t].close for t in targets])
+    open = '|'.join([self.bracket[t].open for t in targets])
+    close = '|'.join([self.bracket[t].close for t in targets])
 
     self.pattern.update({
         'bracket_open' : Rx(open, self.bracket[outcome_key].open, 2),
@@ -111,11 +104,12 @@ class RxPattern(RxLogging, RxSetting):
   def empty_bracket(self, exclude_bracket):
     survive_keys = set(list(self.bracket.keys())) - set(exclude_bracket)
 
-    self.pattern.update({'empty_'+ key : Rx(
-        '%s[^%s%s]*%s' % (self.bracket[key].open,
-                         ''.join(self.letter.values()),
-                         self.bracket[key].close,
-                         self.bracket[key].close), '', 100) for key in survive_keys})
+    self.pattern.update({'empty_'+ key : 
+                         Rx('%s[^%s%s]*%s' % (self.bracket[key].open,
+                                              ''.join(self.letter.values()),
+                                              self.bracket[key].close,
+                                              self.bracket[key].close), '', 100) 
+                         for key in survive_keys})
    
 
 class RxRevision(RxLogging):
