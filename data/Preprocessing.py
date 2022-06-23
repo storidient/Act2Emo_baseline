@@ -121,7 +121,20 @@ class RxRevision(RxLogging):
   
   def ordering(self):
     self.keys = sorted(self.keys, key = lambda x : self.pattern[x].level)
-  
+
+  def update_pattern(self, text):
+    text = ''.join(text) if type(text) == list else text
+    
+    if re.match('.*["“”].*', text): pass
+
+    elif re.match('.*[「」『』].*', text):
+      self.pattern.update({'revise_quotation' : Rx('[「」『』]', '"', 0)})
+      self.logger.info('Quotation_updated : 「」『』')
+    
+    elif re.match('.*[<>].*', text):
+      self.pattern.update({'revise_quotation' : Rx('[<>]', '"', 0)})
+      self.logger.info('Quotation_updated : <>')
+   
   def apply(self, key, input):
     pattern = self.pattern[key]
     output = re.sub(pattern.target, pattern.outcome, input)
@@ -132,10 +145,12 @@ class RxRevision(RxLogging):
     return output
 
   def build(self, text):
+    self.update_pattern(text)
     self.ordering()
+
     self.logger.info('Revising : %s' % ('/'.join(self.keys)))
                  
     for key in self.keys:
       text = list(map(lambda x: self.apply(key, x), text))
                  
-    return text  
+    return text
