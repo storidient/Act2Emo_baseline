@@ -113,7 +113,7 @@ class RxRevision(RxLogging):
   
   def ordering(self):
     self.keys = sorted(self.keys, key = lambda x : self.pattern[x].level)
-
+  
   def apply(self, key, input):
     pattern = self.pattern[key]
     output = re.sub(pattern.target, pattern.outcome, input)
