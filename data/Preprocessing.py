@@ -2,7 +2,7 @@ from pathlib import Path
 import logging, re, argparse
 from cached_property import cached_property
 from boltons.iterutils import pairwise
-
+from data.utils import Rx, B
 
 class Download:
   def __init__(self, dir):
