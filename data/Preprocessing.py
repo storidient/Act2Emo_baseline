@@ -39,14 +39,6 @@ class RxLogging:
     return list(set(keys)- set(undefined))
 
   
-class RxSetting:
-  def __init__(self):
-    self.pattern = dict()
-
-  def replace(self, key, target, outcome = '', level = 1):
-    self.pattern.update({key : Rx(target, outcome, level)})
-    
-    
 class RxPattern(RxLogging, RxSetting):
   def __init__(self, logger, 
                default : bool = True,
@@ -58,6 +50,7 @@ class RxPattern(RxLogging, RxSetting):
     RxSetting.__init__(self)
 
     self.letter, self.bracket, self.unify = letter, bracket, unify
+    self.excldue_bracket = list()
 
     if default == True:
       from data.scripts import default_dict
@@ -81,6 +74,7 @@ class RxPattern(RxLogging, RxSetting):
 
   def update_bracket(self, target_keys, outcome_key : str):
     targets = self.check(target_keys, self.bracket)
+    self.exclude_bracket = targets
     
     assert outcome_key in self.bracket, 'The outcome key is not defined'
 
@@ -91,7 +85,7 @@ class RxPattern(RxLogging, RxSetting):
         'bracket_open' : Rx(open, self.bracket[outcome_key].open, 2),
         'bracket_close' : Rx(close, self.bracket[outcome_key].close, 2)
         })
-    self.empty_bracket(targets)
+    self.empty_bracket()
 
   def update_unify(self, keys):
     if keys == 'all':
@@ -101,8 +95,8 @@ class RxPattern(RxLogging, RxSetting):
       keys = self.check(keys, self.unify)
       self.pattern.update({key : self.unify[key] for key in keys})
       
-  def empty_bracket(self, exclude_bracket):
-    survive_keys = set(list(self.bracket.keys())) - set(exclude_bracket)
+  def empty_bracket(self):
+    survive_keys = set(self.bracket.keys()) - set(self.exclude_bracket)
 
     self.pattern.update({'empty_'+ key : 
                          Rx('%s[^%s%s]*%s' % (self.bracket[key].open,
@@ -110,8 +104,26 @@ class RxPattern(RxLogging, RxSetting):
                                               self.bracket[key].close,
                                               self.bracket[key].close), '', 100) 
                          for key in survive_keys})
-   
+  
+  def exclude(self, whole_keys, minus_keys = None):
+    minus_keys = self.pattern.keys() if minus_keys == None else minus_keys
+    return set(whole_keys) - set(minus_keys)
 
+  def include(self, marks : str = '', default: bool = True) -> str:
+    letter = [self.letter[key] for key in self.exclude(self.letter.keys())]
+
+    bracket = ['%s%s' % (self.bracket[key].open,
+                         self.bracket[key].close)
+    for key in self.exclude(self.bracket, self.exclude_bracket)]
+
+    outcome = ''.join(letter + bracket)
+
+    if default == True:
+      outcome += ' \.\!\?'
+
+    return '[%s]|%s' % (outcome, marks)
+
+  
 class RxRevision(RxLogging):
   def __init__(self, logger, pattern, keys = None):
     super().__init__(logger)
