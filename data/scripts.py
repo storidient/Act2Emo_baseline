@@ -16,7 +16,8 @@ bracket_dict = {
     'middle-1' : B('〔', '〕'),
     'big' : B('{', '}'),
     'sickle' : B('「', '」'),
-    'double_sickle' : B('『','』')
+    'double_sickle' : B('『','』'),
+    'double_inequal' : B('《', '》')
     }
 
 unify_dict = {
