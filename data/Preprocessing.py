@@ -39,6 +39,14 @@ class RxLogging:
     return list(set(keys)- set(undefined))
 
   
+class RxSetting:
+  def __init__(self):
+    self.pattern = dict()
+
+  def replace(self, key, target, outcome = '', level = 1):
+    self.pattern.update({key : Rx(target, outcome, level)})
+  
+  
 class RxPattern(RxLogging, RxSetting):
   def __init__(self, logger, 
                default : bool = True,
