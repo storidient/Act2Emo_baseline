@@ -47,12 +47,12 @@ class RxSeperation(RxLogging):
     self.ep, self.scene = ep_pattern, scene_pattern
 
     if ep_pattern == None:
-      from data.scripts import ep_pattern_list
-      self.ep = ep_pattern_list
+      from data.scripts import ep_pattern_dict
+      self.ep = ep_pattern_dict
     
     if scene_pattern == None:
-      from data.scripts import scene_pattern_list
-      self.scene = scene_pattern_list
+      from data.scripts import scene_pattern_dict
+      self.scene = scene_pattern_dict
 
   def apply(self, key, line):
     if re.match(self.pattern[key], line):
