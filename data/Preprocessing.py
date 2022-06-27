@@ -117,7 +117,7 @@ class RxPattern(RxLogging, RxSetting):
     minus_keys = self.pattern.keys() if minus_keys == None else minus_keys
     return set(whole_keys) - set(minus_keys)
 
-  def include(self, marks : list = None, default: bool = True) -> str:
+  def pattern_check(self, marks : list = None, default: bool = True) -> str:
     outcome = marks if marks != None else list()
     outcome += [self.letter[key] for key in self.exclude(self.letter.keys())]
     outcome += ['%s%s' % (self.bracket[key].open, self.bracket[key].close)
@@ -126,7 +126,7 @@ class RxPattern(RxLogging, RxSetting):
     if default == True:
       outcome = ['\.', '\!', '\?', ' ', ',', '-']
       
-    return '[%s]' % (''.join(set(outcome)))
+    return '[^%s]' % (''.join(set(outcome)))
 
   
 class RxRevision(RxLogging):
