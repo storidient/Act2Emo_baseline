@@ -38,6 +38,43 @@ class RxLogging:
 
     return list(set(keys)- set(undefined))
 
+
+class RxSeperation(RxLogging):
+  def __init__(self, logger, ep_pattern : dict = None, 
+               scene_pattern : dict = None):
+    RxLogging.__init__(self, logger)
+
+    self.ep, self.scene = ep_pattern, scene_pattern
+
+    if ep_pattern == None:
+      from data.scripts import ep_pattern_list
+      self.ep = ep_pattern_list
+    
+    if scene_pattern == None:
+      from data.scripts import scene_pattern_list
+      self.scene = scene_pattern_list
+
+  def apply(self, key, line):
+    if re.match(self.pattern[key], line):
+      self.print(key, 'seperation_pattern : %s / line : %s' % (key,line))
+      return True
+    else:
+      return False
+
+  def build(self, text, scene = False):
+    self.pattern = self.ep if scene == False else self.scene
+    
+    idx_list = list(map(
+        lambda key : [idx for idx, line in enumerate(text) if self.apply(key, line) == True]
+        , self.pattern.keys()))
+    
+    idx_list = [0] + sum(idx_list, [])
+    output = [text[:s2] if idx_list.count(0) ==1 and s1 == 0 else text[s1+1:s2] 
+              for s1, s2 in pairwise(idx_list)]
+    
+    output.append(text[max(idx_list):])
+    return [x for x in output if len(x) > 0]
+  
   
 class RxSetting:
   def __init__(self):
