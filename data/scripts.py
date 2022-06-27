@@ -1,5 +1,23 @@
 from data.utils import Rx, B
 
+ep_pattern_dict = {
+    'N화' : '.*[0-9]+[화].*',
+    '<N 제목>' : '<.*[0-9]+[^가-힣]+>$',
+    '영어 N' : '^[A-Za-z]+[^가-힣]*[0-9]+.*',
+    'N. 제목 ': '^[^“"].*[0-9]+\. ?[^가-힣0-9%]+.*',
+}
+
+ep_pattern_dict['키워드'] = ''.join(
+    ['.*%s ?[^가-힣]+.*|.*%s$' % (x, x) for x in ['에필로그',
+                                                '프롤로그', 
+                                                '본편']]
+)
+
+scene_pattern_dict = {
+    '*' : '\*+',
+    '+' : '\++',
+}
+
 letter_dict = {
     'korean' : '가-힣',
     'english': 'A-Za-z',
