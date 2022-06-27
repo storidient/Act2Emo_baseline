@@ -1,5 +1,6 @@
 jamo
 git-python
+konlpy
 transformers
 pandas
 wandb
