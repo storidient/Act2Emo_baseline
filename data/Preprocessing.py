@@ -129,7 +129,7 @@ class RxPattern(RxLogging, RxSetting):
     if default == True:
       outcome += ' \.\!\?'
 
-    return '[%s]|%s' % (outcome, marks)
+    return '[%s]|%s' % (outcome, marks) if marks != '' else '[%s]' % (outcome)
 
   
 class RxRevision(RxLogging):
