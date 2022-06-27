@@ -59,6 +59,7 @@ class RxPattern(RxLogging, RxSetting):
 
     self.letter, self.bracket, self.unify = letter, bracket, unify
     self.excldue_bracket = list()
+    self.default = ['\.', '\!', '\?', ' ', ',', '\-', '⋯', '"', "'"]
 
     if default == True:
       from data.scripts import default_dict
@@ -124,7 +125,7 @@ class RxPattern(RxLogging, RxSetting):
                 for key in self.exclude(self.bracket, self.exclude_bracket)]
     
     if default == True:
-      outcome += ['\.', '\!', '\?', ' ', ',', '\-']
+      outcome += self.default
       
     return '[^%s]' % (''.join(set(outcome)))
 
