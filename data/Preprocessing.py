@@ -124,7 +124,7 @@ class RxPattern(RxLogging, RxSetting):
                 for key in self.exclude(self.bracket, self.exclude_bracket)]
     
     if default == True:
-      outcome = ['\.', '\!', '\?', ' ', ',', '-']
+      outcome += ['\.', '\!', '\?', ' ', ',', '\-']
       
     return '[^%s]' % (''.join(set(outcome)))
 
