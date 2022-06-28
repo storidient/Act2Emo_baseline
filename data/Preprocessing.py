@@ -24,7 +24,7 @@ class RxLogging:
     self.show_key = list()
 
   def show(self, key):
-    self.show_key = key if type(key) == list else [key]
+    self.show_key = [key] if type(key) == str else key
   
   def print(self, key, message):
     self.logger.info(message) if key in self.show_key else self.logger.debug(message)
