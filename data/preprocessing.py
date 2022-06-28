@@ -146,14 +146,15 @@ class RxSetting(RxLogging):
   
   def update_empty_bracket(self):
     """Makes rules to delete empty brackets e.g. (), <> ..."""
-    remain_keys = set(self.bracket.keys()) - set(self.exclude_bracket)
-
-    self.pattern.update(
-      {'empty_'+ key : Rx('%s[^%s%s]*%s' % (self.bracket[key].open,
+    remain_keys = set(self.bracket.keys()) - set(self.excluded_bracket)
+    
+    for key in remain_keys:
+      self.pattern.update(
+        {'empty_'+ key : Rx('%s[^%s%s]*%s' % (self.bracket[key].open,
                                             ''.join(self.letter.values()),
                                             self.bracket[key].close,
-                                            self.bracket[key].close), '', 100) 
-       for key in remain_keys})
+                                            self.bracket[key].close), '', 100)}
+      )
   
   def check_marks(self, 
                   add_marks : list = None, 
