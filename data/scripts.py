@@ -14,8 +14,8 @@ ep_pattern_dict['키워드'] = ''.join(
 )
 
 scene_pattern_dict = {
-    '*' : '\*+',
-    '+' : '\++',
+    '*' : '\*+/.?',
+    '+' : '\++/.?',
 }
 
 letter_dict = {
