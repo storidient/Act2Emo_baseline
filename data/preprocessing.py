@@ -211,7 +211,7 @@ class RxRevision(RxLogging):
     return output
 
   def main(self, text):
-    """Revise the text"""
+    """Revises the text"""
     self.update_pattern(text)
     self.ordering()
     
