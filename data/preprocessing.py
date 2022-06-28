@@ -90,7 +90,6 @@ class RxSetting(RxLogging):
                default : bool = True):
     
     RxLogging.__init__(self, logger)
-    RxSetting.__init__(self)
     
     self.pattern, self.excluded_bracket = dict(), list()
     self.letter, self.bracket, self.unify = letter, bracket, unify
