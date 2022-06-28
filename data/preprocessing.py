@@ -22,7 +22,7 @@ class RxLogging:
     self.logger.info(message) if key in self.show_key else self.logger.debug(message)
   
   def check(self, keys, pattern):
-    """Checks if the keys are in the pattern dictionary""""
+    """Checks if the keys are in the pattern dictionary"""
     keys = keys if type(keys) == list else [keys]
     undefined = [key for key in keys if key not in pattern]
 
