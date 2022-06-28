@@ -58,7 +58,7 @@ class RxDivision(RxLogging):
       return False
     
   def get_idx(self, key, text):
-    return [idx for for idx, line in enumerate(text) if self.match(key, line) == True]
+    return [idx for idx, line in enumerate(text) if self.match(key, line) == True]
       
   def main(self, text, scene = False):
     """Divides the text into episodes"""
