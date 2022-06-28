@@ -8,7 +8,6 @@ from data.utils import Rx, B
 
 class RxLogging:
   """Gets the logger and monitor the process"""
-  
   def __init__(self, logger):
     self.logger = logger
     self.show_key = list()
