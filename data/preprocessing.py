@@ -162,11 +162,9 @@ class RxSetting(RxLogging):
     output = add_marks if add_marks != None else list()
     output += [self.letter[key] for key in self._exclude(self.letter.keys())]
     output += [self.bracket[key].open + self.bracket[key].close
-               for key in self._exclude(self.bracket, self.exclude_bracket)]
-    
+               for key in self._exclude(self.bracket, self.excluded_bracket)] 
     if default == True:
-      outcome += self.basic_marks
-      
+      outcome += self.basic_marks     
     return '[^%s]' % (''.join(set(outcome)))
   
   def _exclude(self, whole_keys, minus_keys = None):
@@ -212,11 +210,6 @@ class RxRevision(RxLogging):
     """Revises the text"""
     self.update_pattern(text)
     self.ordering()
-    
-    output = list()
-    for line in text:
-      for key in self.keys:
-        line = self.apply(key, line)
-      output.append(line)
-        
-    return output
+    for key in self.keys:
+      text = list(map(lambda x : self.apply(key, x), text))
+    return text
