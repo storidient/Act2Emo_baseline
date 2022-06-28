@@ -69,8 +69,9 @@ class RxSeperation(RxLogging):
         , self.pattern.keys()))
     
     idx_list = [0] + sorted(sum(idx_list, []))
-    output = [text[:s2] if idx_list.count(0) ==1 and s1 == 0 else text[s1+1:s2] 
-              for s1, s2 in pairwise(idx_list)]
+  
+    output = [text[s1:s2] if (s1 == 0 and idx_list.count(0) == 1)
+              else text[s1+1:s2] for s1, s2 in pairwise(idx_list)]
     
     output.append(text[max(idx_list)+1:])
     return [x for x in output if len(x) > 0]
