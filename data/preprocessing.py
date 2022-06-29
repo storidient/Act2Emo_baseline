@@ -68,11 +68,17 @@ class RxDivision(RxLogging):
     self.pattern = self.ep if scene == False else self.scene
     
     indices = list(map(lambda key : self.get_idx(key, text), self.pattern.keys()))
-    indices = sum(indices, [])
-    indices = [0] + sorted(set(indices))
+    indices = set(sum(indices, []))
+    indices = sorted(list(indices))
     
-    output = [text[s1:s2] if (s1 == 0 and indices.count(0) == 1) else text[s1+1:s2] 
-              for s1, s2 in pairwise(indices)]
+    if 0 in indices:
+      output = [text[s1+1:s2] for s1, s2 in pairwise(indices)]
+    
+    else:
+      indices = [0] + indices
+      output = [text[s1:s2] if s1 == 0 else text[s1+1:s2] 
+                for s1, s2 in pairwise(indices)]
+      
     output.append(text[max(indices)+1:])
     
     return [x for x in output if len(x) > 0]
