@@ -179,14 +179,13 @@ class RxSetting(RxLogging):
   
 class RxRevision(RxLogging):
   """Gets the revising patterns and revise the text"""
-  def __init__(self, logger, pattern, keys = None):
+  def __init__(self, logger, pattern):
     super().__init__(logger)
     self.pattern = pattern
-    self.keys = self.pattern.keys() if keys == None else self.check(keys, self.pattern)
-  
-  def ordering(self):
+    
+  def ordering(self, keys):
     """Re-orders the revising rules by the level"""
-    self.keys = sorted(self.keys, key = lambda x : self.pattern[x].level)
+    return sorted(keys, key = lambda x : self.pattern[x].level)
 
   def update_pattern(self, text):
     """Adds 「」『』 marks as quotation marks if there is no " in the text"""
@@ -214,10 +213,9 @@ class RxRevision(RxLogging):
   def main(self, text):
     """Revises the text"""
     self.update_pattern(text)
-    self.ordering()
-    self.logger.info(self.keys)
+    keys = self.ordering(self.pattern.keys())
     
-    for key in self.keys:
+    for key in keys:
       text = list(map(lambda x : self.apply(key, x), text))
       
     return [x for x in map(lambda line : re.sub(' +', ' ', line).strip(), text) if len(x) > 0]
