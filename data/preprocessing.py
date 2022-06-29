@@ -69,11 +69,15 @@ class RxDivision(RxLogging):
     
     indices = list(map(lambda key : self.get_idx(key, text), self.pattern.keys()))
     indices = set(sum(indices, []))
-    indices = [0] + sorted(list(indices))
-    output = [text[:s2] if (s1 == 0 and indices.count(0) == 1) else text[s1+1:s2] for s1, s2 in pairwise(indices)]
-    output.append(text[max(indices)+1:])
     
-    return [x for x in output if len(x) > 0]
+    if len(indices) == 0:
+      return text
+   
+    else:
+      indices = [0] + sorted(list(indices))
+      output = [text[:s2] if (s1 == 0 and indices.count(0) == 1) else text[s1+1:s2] for s1, s2 in pairwise(indices)]
+      output.append(text[max(indices)+1:])
+      return [x for x in output if len(x) > 0]
 
   
 class RxSetting(RxLogging):
