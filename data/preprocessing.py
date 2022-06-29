@@ -4,7 +4,7 @@ from cached_property import cached_property
 from boltons.iterutils import pairwise
 from data.utils import Rx, B
 
-def download(dir : str):
+def download(dir):
   with open(dir,  mode='rt', encoding='utf-8') as f:
     text = f.readlines()
   return list(map(lambda x : x.replace('\n', '').replace(u'\xa0', u' ').strip(), text))
