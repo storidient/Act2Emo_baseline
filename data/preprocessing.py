@@ -169,7 +169,7 @@ class RxSetting(RxLogging):
     
     if default == True:
       output += self.basic_marks   
-    return '[^%s]' % (''.join(set(outcome)))
+    return '[^%s]' % (''.join(set(output)))
   
   def _exclude(self, whole_keys, minus_keys = None):
     minus_keys = self.pattern.keys() if minus_keys == None else minus_keys
