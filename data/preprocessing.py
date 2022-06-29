@@ -218,5 +218,5 @@ class RxRevision(RxLogging):
     
     for key in self.keys:
       text = list(map(lambda x : self.apply(key, x), text))
-    
-    return list(map(lambda x : re.sub(' +', ' ', x).strip(), text))
+      
+    return [x for x in map(lambda line : re.sub(' +', ' ', line).strip(), text) if len(x) > 0]
