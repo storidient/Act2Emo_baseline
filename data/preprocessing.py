@@ -215,6 +215,8 @@ class RxRevision(RxLogging):
     """Revises the text"""
     self.update_pattern(text)
     self.ordering()
+    
     for key in self.keys:
       text = list(map(lambda x : self.apply(key, x), text))
-    return text
+    
+    return list(map(lambda x : re.sub(' +', ' ', x).strip(), text))
