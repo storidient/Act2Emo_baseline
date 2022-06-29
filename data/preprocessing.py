@@ -72,6 +72,7 @@ class RxDivision(RxLogging):
     indices = sorted(list(indices))
     
     if 0 in indices:
+      print(indices)
       output = [text[s1+1:s2] for s1, s2 in pairwise(indices)]
     
     else:
