@@ -10,7 +10,7 @@ def download(dir):
   return list(map(lambda x : x.replace('\n', '').replace(u'\xa0', u' ').strip(), text))
 
 class RxLogging:
-  """Gets the logger and monitor the process"""
+  """Gets the logger and monitors the process"""
   def __init__(self, logger):
     self.logger = logger
     self.show_key = list()
@@ -159,14 +159,14 @@ class RxSetting(RxLogging):
                                             self.bracket[key].close), '', 100)}
       )
   
-  def check_marks(self, 
-                  add_marks : list = None, 
-                  default: bool = True) -> str:
+  def check_marks(self, add_marks : list = None, default: bool = True) -> str:
     """Returns the RxPattern to check if lines have unexpected special marks"""
     output = add_marks if add_marks != None else list()
+    
     output += [self.letter[key] for key in self._exclude(self.letter.keys())]
     output += [self.bracket[key].open + self.bracket[key].close
                for key in self._exclude(self.bracket, self.excluded_bracket)] 
+    
     if default == True:
       output += self.basic_marks   
     return '[^%s]' % (''.join(set(outcome)))
