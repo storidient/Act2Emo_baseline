@@ -168,7 +168,7 @@ class RxSetting(RxLogging):
     output += [self.bracket[key].open + self.bracket[key].close
                for key in self._exclude(self.bracket, self.excluded_bracket)] 
     if default == True:
-      outcome += self.basic_marks     
+      output += self.basic_marks   
     return '[^%s]' % (''.join(set(outcome)))
   
   def _exclude(self, whole_keys, minus_keys = None):
