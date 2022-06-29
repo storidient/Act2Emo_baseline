@@ -71,7 +71,7 @@ class RxDivision(RxLogging):
     indices = set(sum(indices, []))
     
     if len(indices) == 0:
-      return text
+      return [text]
    
     else:
       indices = [0] + sorted(list(indices))
