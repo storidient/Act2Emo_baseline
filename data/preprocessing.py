@@ -5,6 +5,7 @@ from boltons.iterutils import pairwise
 from data.utils import Rx, B
 
 def download(dir):
+  """Gets the directory of the file and returns the text"""
   with open(dir,  mode='rt', encoding='utf-8') as f:
     text = f.readlines()
   return list(map(lambda x : x.replace('\n', '').replace(u'\xa0', u' ').strip(), text))
